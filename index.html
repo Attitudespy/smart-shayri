@@ -1,191 +1,208 @@
-‎<!DOCTYPE html>
-‎<html lang="hi">
-‎<head>
-‎<meta charset="UTF-8">
-‎<meta name="viewport" content="width=device-width, initial-scale=1.0">
-‎<title>Smart Shayari - AI Shayari Generator</title>
-‎<meta name="description" content="Apne mood ke hisab se AI Shayari generate karo - Sad, Love, Yaari">
-‎<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%237c3aed'/><text y='.9em' x='50%' dominant-baseline='middle' text-anchor='middle' font-size='60'>✒️</text></svg>">
-‎
-‎<!-- ADSENSE CODE YAHAN LAGANA - ca-pub-XXXX ko apna ID se badal dena -->
-‎<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script> -->
-‎
-‎<style>
-‎*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',sans-serif}
-‎body{background:#fef7f0;min-height:100vh;padding-bottom:90px}
-‎.header{position:sticky;top:0;z-index:20;background:#fff;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #f0e6d9}
-‎.logo-box{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;color:#2d1b4e}
-‎.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,#7c3aed,#3c1a7a);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff}
-‎.timer-badge{background:#ffedd5;border:1px solid #fdba74;padding:6px 12px;border-radius:20px;font-size:12px;color:#9a3412}
-‎.describe-card{margin:16px;background:#fff;border-radius:18px;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,.06);border:1px solid #f5e6d3}
-‎.describe-card textarea{width:100%;border:1.5px solid #f3e8d3;border-radius:12px;padding:12px;font-size:15px;outline:none;resize:none}
-‎.describe-card textarea:focus{border-color:#7c3aed}
-‎.describe-card .gen-btn{width:100%;margin-top:12px;background:#7c3aed;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:700;font-size:16px}
-‎.filters{display:flex;gap:8px;overflow-x:auto;padding:4px 16px 12px;scrollbar-width:none}
-‎.filters::-webkit-scrollbar{display:none}
-‎.f-chip{white-space:nowrap;background:#fff;border:1.5px solid #f0dcc3;padding:8px 16px;border-radius:22px;font-size:14px;cursor:pointer}
-‎.f-chip.active{background:#7c3aed;color:#fff;border-color:#7c3aed}
-‎.masonry{columns:2;column-gap:12px;padding:0 16px}
-‎@media(min-width:600px){.masonry{columns:3}}
-‎.shayari-card{break-inside:avoid;background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;border:1px solid #f5e6d3;position:relative;transition:.2s}
-‎.shayari-card.big{border:2px solid #22c55e;background:linear-gradient(180deg,#fff,#f0fdf4)}
-‎.shayari-card.locked::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.72);backdrop-filter:blur(5px);border-radius:14px;z-index:1}
-‎.shayari-card .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;position:relative;z-index:2}
-‎.badge{font-size:10px;font-weight:700;padding:4px 7px;border-radius:6px;letter-spacing:.5px}
-‎.badge.FREE{background:#dcfce7;color:#166534;border:1px solid #86efac}
-‎.badge.PREMIUM{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
-‎.card-text{font-size:14px;line-height:1.5;color:#1f2937;position:relative;z-index:2}
-‎.big .card-text{font-size:16px;font-weight:600}
-‎.card-foot{margin-top:10px;display:flex;gap:12px;font-size:12px;color:#9ca3af;position:relative;z-index:2}
-‎.lock-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;background:#111;color:#fff;padding:8px 12px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
-‎
-‎/* AD POPUP - NO CUT, Piche dikhega */
-‎#adOverlay{position:fixed;inset:0;z-index:100;background:rgba(90,60,20,.25);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px}
-‎#adOverlay.show{display:flex}
-‎.ad-box{background:#fff;width:100%;max-width:340px;border-radius:22px;padding:24px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.25);animation:pop .3s ease}
-‎@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
-‎.ad-box .icon{width:64px;height:64px;background:#ffedd5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 14px}
-‎.ad-box h3{font-size:18px;color:#111827;margin-bottom:6px}
-‎.ad-box p{font-size:13px;color:#6b7280;line-height:1.4}
-‎.ad-box .cta{width:100%;margin-top:18px;background:#f97316;color:#fff;border:none;padding:15px;border-radius:14px;font-weight:800;font-size:16px}
-‎.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:24px;font-size:12px;z-index:30;display:flex;align-items:center;gap:6px}
-‎footer{margin-top:40px;text-align:center;padding:20px;font-size:13px;color:#9ca3af}
-‎footer a{color:#7c3aed;text-decoration:none;margin:0 8px}
-‎</style>
-‎</head>
-‎<body>
-‎
-‎<div class="header">
-‎  <div class="logo-box"><div class="logo-icon">✒️</div>Smart Shayari</div>
-‎  <div class="timer-badge" id="topTimer">05:00 • Browsing</div>
-‎</div>
-‎
-‎<div class="describe-card">
-‎  <textarea id="userIdea" rows="3" placeholder="Apna idea yahan likhe... ex: yaad wali sad shayari"></textarea>
-‎  <button class="gen-btn" onclick="onGenerateClick()">✨ Generate Shayari</button>
-‎</div>
-‎
-‎<div class="filters" id="filterBar">
-‎  <div class="f-chip active" data-cat="All" onclick="onFilterClick(this,'All')">All</div>
-‎  <div class="f-chip" data-cat="Sad" onclick="onFilterClick(this,'Sad')">😢 Sad</div>
-‎  <div class="f-chip" data-cat="Love" onclick="onFilterClick(this,'Love')">❤️ Love</div>
-‎  <div class="f-chip" data-cat="Yaari" onclick="onFilterClick(this,'Yaari')">🤝 Yaari</div>
-‎  <div class="f-chip" data-cat="Attitude" onclick="onFilterClick(this,'Attitude')">😎 Attitude</div>
-‎  <div class="f-chip" data-cat="Breakup" onclick="onFilterClick(this,'Breakup')">💔 Breakup</div>
-‎</div>
-‎
-‎<div class="masonry" id="feed"></div>
-‎
-‎<div class="toast" id="bottomToast">⏳ Next ad in 5:00 minutes</div>
-‎
-‎<!-- NO CUT BUTTON AD POPUP -->
-‎<div id="adOverlay">
-‎  <div class="ad-box">
-‎    <div class="icon">⌛</div>
-‎    <h3 id="adTitle">Watch to Unlock Sad Shayari</h3>
-‎    <p id="adDesc">Watch a 15-second ad to continue<br>Ad supports free content • No charge</p>
-‎    <!-- Yahan Real AdSense ka Rewarded Ad Ayega -->
-‎    <div id="realAdSlot" style="margin:14px 0;background:#f9fafb;border:1px dashed #e5e7eb;height:100px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#9ca3af">AdSense Rewarded Ad Here</div>
-‎    <button class="cta" onclick="onAdWatched()">Continue</button>
-‎    <div style="margin-top:8px;font-size:11px;color:#9ca3af">X button disabled • Ad must be watched</div>
-‎  </div>
-‎</div>
-‎
-‎<footer>
-‎  <a href="#" onclick="alert('Privacy: We use AdSense cookies. No personal data collected. Contact: help@smartshayari.com')">Privacy Policy</a> |
-‎  <a href="#" onclick="alert('About: Smart Shayari - AI based shayari generator from Purnea, Bihar')">About Us</a> |
-‎  <a href="#" onclick="alert('Contact: smartshayari.help@gmail.com')">Contact Us</a>
-‎  <div style="margin-top:8px">© 2026 Smart Shayari</div>
-‎</footer>
-‎
-‎<script>
-‎const baseShayaris=[
-‎{text:"तेरे ख्यालों में खोया हूँ, रात भर जागा हूँ...",cat:"Sad"},{text:"इश्क़ एक समंदर है, डूब के जाना है...",cat:"Love"},{text:"रात भर तेरा इंतज़ार किया, तू ना आई...",cat:"Sad"},{text:"यारी वो नहीं जो जान दे, यारी वो है जो हर वक़्त दे...",cat:"Yaari"},{text:"हम तो तेरे दिल के एक कोने में ही खुश थे...",cat:"Love"},{text:"मोहब्बत में कोई हिसाब नहीं होता...",cat:"Love"},{text:"Attitude तो बचपन से है, आज दिखा दिया...",cat:"Attitude"},{text:"ब्रेकअप के बाद भी तेरी याद आती है...",cat:"Breakup"},{text:"दिल टूटा है पर हौसला अभी बाकी है...",cat:"Sad"},{text:"तेरी हँसी में बसा है मेरा जहाँ...",cat:"Love"},
-‎{text:"दोस्ती में मतलब नहीं होता...",cat:"Yaari"},{text:"हम बुरे हैं, मानते हैं, पर दिल के सच्चे हैं...",cat:"Attitude"},
-‎];
-‎function getFeedData(){
-‎  let arr=[];
-‎  for(let i=0;i<32;i++){ let b=baseShayaris[i%baseShayaris.length]; arr.push({...b,id:i,likes:Math.floor(500+Math.random()*3000)}); }
-‎  return arr;
-‎}
-‎let currentCat="All";
-‎let isGeneratedMode=false;
-‎let pendingAction=null; // {type:'filter',cat} or {type:'generate'}
-‎
-‎function renderFeed(){
-‎  const feed=document.getElementById('feed');
-‎  let data=getFeedData().filter(s=> currentCat==='All' || s.cat===currentCat);
-‎  if(isGeneratedMode){
-‎    data=data.slice(0,10).map((s,i)=> ({...s,isBig:i===0,lock:i!==0}));
-‎  } else {
-‎    data=data.map(s=> ({...s,isBig:false,lock:false}));
-‎  }
-‎  feed.innerHTML=data.map(s=>`
-‎    <div class="shayari-card ${s.isBig?'big':''} ${s.lock?'locked':''}">
-‎      <div class="top"><span class="badge ${s.lock?'PREMIUM':'FREE'}">${s.lock?'PREMIUM':'FREE'}</span></div>
-‎      <div class="card-text">${s.text}</div>
-‎      <div class="card-foot"><span>❤️ ${s.likes}</span><span>↗️ Share</span></div>
-‎      ${s.lock?`<div class="lock-label">🔒 Watch Ad to Unlock</div>`:''}
-‎    </div>
-‎  `).join('');
-‎}
-‎
-‎function showAd(title,desc,action){
-‎  document.getElementById('adTitle').innerText=title;
-‎  document.getElementById('adDesc').innerHTML=desc;
-‎  pendingAction=action;
-‎  document.getElementById('adOverlay').classList.add('show');
-‎  // Body scroll lock nahi karna - piche feed dikhna chahiye blur me
-‎}
-‎
-‎function onFilterClick(el,cat){
-‎  document.querySelectorAll('.f-chip').forEach(c=>c.classList.remove('active'));
-‎  el.classList.add('active');
-‎  showAd(`Watch to Unlock ${cat} Shayari`,`Watch a 15-second ad to unlock ${cat} feed<br>Ad supports free content • No charge`,{type:'filter',cat:cat});
-‎}
-‎
-‎function onGenerateClick(){
-‎  const idea=document.getElementById('userIdea').value.trim();
-‎  if(!idea){ alert('Pehle Apna Idea Likho!'); return; }
-‎  showAd(`Watch Ad to Generate Shayari`,`Your idea: "${idea.slice(0,25)}..."<br>Watch ad to generate 10 fresh shayaris`,{type:'generate'});
-‎}
-‎
-‎function onAdWatched(){
-‎  document.getElementById('adOverlay').classList.remove('show');
-‎  if(!pendingAction) return;
-‎  if(pendingAction.type==='filter'){
-‎    currentCat=pendingAction.cat;
-‎    isGeneratedMode=false;
-‎    renderFeed();
-‎  } else if(pendingAction.type==='generate'){
-‎    currentCat='All';
-‎    isGeneratedMode=true;
-‎    renderFeed();
-‎    window.scrollTo({top:400,behavior:'smooth'});
-‎  } else if(pendingAction.type==='timer'){
-‎    // 5 min wala ad - bas close
-‎  }
-‎  resetTimer();
-‎  pendingAction=null;
-‎}
-‎
-‎// Har 5 Minute Timer Logic
-‎let timeLeft=300;
-‎let timerInterval=setInterval(()=>{
-‎  timeLeft--;
-‎  let m=String(Math.floor(timeLeft/60)).padStart(2,'0');
-‎  let s=String(timeLeft%60).padStart(2,'0');
-‎  document.getElementById('topTimer').innerText=`${m}:${s} • Browsing`;
-‎  document.getElementById('bottomToast').innerText=`⏳ Next ad in ${m}:${s} minutes`;
-‎  if(timeLeft<=0){
-‎    showAd(`You've been exploring for 5 minutes • Quick Break`,`Watch a short ad to continue exploring free shayari`,{type:'timer'});
-‎    timeLeft=300;
-‎  }
-‎},1000);
-‎function resetTimer(){ timeLeft=300; }
-‎
-‎renderFeed();
-‎</script>
-‎</body>
-‎</html>
-‎
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Shayari - AI Shayari Generator</title>
+<meta name="description" content="Apne mood ke hisab se AI Shayari generate karo - Sad, Love, Yaari">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✒️</text></svg>">
+
+<!-- ADSENSE CODE YAHAN LAGANA -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',sans-serif}
+body{background:#fef7f0;min-height:100vh;padding-bottom:90px}
+.header{position:sticky;top:0;z-index:20;background:#fff;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #f0e6d9}
+.logo-box{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px;color:#2d1b4e}
+.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,#7c3aed,#3c1a7a);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff}
+.timer-badge{background:#ffedd5;border:1px solid #fdba74;padding:6px 12px;border-radius:20px;font-size:12px;color:#9a3412}
+.describe-card{margin:16px;background:#fff;border-radius:18px;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,.06);border:1px solid #f5e6d3}
+.describe-card textarea{width:100%;border:1.5px solid #f3e8d3;border-radius:12px;padding:12px;font-size:15px;outline:none;resize:none}
+.describe-card textarea:focus{border-color:#7c3aed}
+.describe-card .gen-btn{width:100%;margin-top:12px;background:#7c3aed;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:700;font-size:16px}
+.filters{display:flex;gap:8px;overflow-x:auto;padding:4px 16px 12px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.f-chip{white-space:nowrap;background:#fff;border:1.5px solid #f0dcc3;padding:8px 16px;border-radius:22px;font-size:14px;cursor:pointer}
+.f-chip.active{background:#7c3aed;color:#fff;border-color:#7c3aed}
+.masonry{columns:2;column-gap:12px;padding:0 16px}
+@media(min-width:600px){.masonry{columns:3}}
+.shayari-card{break-inside:avoid;border-radius:14px;padding:14px;margin-bottom:12px;border:1px solid #f5e6d3;position:relative;transition:.2s}
+.shayari-card.big{border:2px solid #22c55e;background:linear-gradient(180deg,#fff,#f0fdf4)!important}
+.shayari-card.locked::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.72);backdrop-filter:blur(5px);border-radius:14px;z-index:1}
+.shayari-card .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;position:relative;z-index:2}
+.badge{font-size:10px;font-weight:700;padding:4px 7px;border-radius:6px;letter-spacing:.5px}
+.badge.FREE{background:#dcfce7;color:#166534;border:1px solid #86efac}
+.badge.PREMIUM{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
+.card-text{font-size:14px;line-height:1.5;color:#1f2937;position:relative;z-index:2}
+.big .card-text{font-size:16px;font-weight:600}
+.card-foot{margin-top:10px;display:flex;gap:12px;font-size:12px;color:#9ca3af;position:relative;z-index:2}
+.lock-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;background:#111;color:#fff;padding:8px 12px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
+#adOverlay{position:fixed;inset:0;z-index:100;background:rgba(90,60,20,.25);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px}
+#adOverlay.show{display:flex}
+.ad-box{background:#fff;width:100%;max-width:340px;border-radius:22px;padding:24px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.25);animation:pop .3s ease}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.ad-box .icon{width:64px;height:64px;background:#ffedd5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 14px}
+.ad-box h3{font-size:18px;color:#111827;margin-bottom:6px}
+.ad-box p{font-size:13px;color:#6b7280;line-height:1.4}
+.ad-box .cta{width:100%;margin-top:18px;background:#f97316;color:#fff;border:none;padding:15px;border-radius:14px;font-weight:800;font-size:16px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:24px;font-size:12px;z-index:30;display:flex;align-items:center;gap:6px}
+footer{margin-top:40px;text-align:center;padding:20px;font-size:13px;color:#9ca3af}
+footer a{color:#7c3aed;text-decoration:none;margin:0 8px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-box"><div class="logo-icon">✒️</div>Smart Shayari</div>
+  <div class="timer-badge" id="topTimer">05:00 • Browsing</div>
+</div>
+
+<div class="describe-card">
+  <textarea id="userIdea" rows="3" placeholder="Apna idea yahan likhe... ex: yaad wali sad shayari"></textarea>
+  <button class="gen-btn" onclick="onGenerateClick()">✨ Generate Shayari</button>
+</div>
+
+<div class="filters" id="filterBar">
+  <div class="f-chip active" data-cat="All" onclick="onFilterClick(this,'All')">All</div>
+  <div class="f-chip" data-cat="Sad" onclick="onFilterClick(this,'Sad')">😢 Sad</div>
+  <div class="f-chip" data-cat="Love" onclick="onFilterClick(this,'Love')">❤️ Love</div>
+  <div class="f-chip" data-cat="Yaari" onclick="onFilterClick(this,'Yaari')">🤝 Yaari</div>
+  <div class="f-chip" data-cat="Attitude" onclick="onFilterClick(this,'Attitude')">😎 Attitude</div>
+  <div class="f-chip" data-cat="Breakup" onclick="onFilterClick(this,'Breakup')">💔 Breakup</div>
+</div>
+
+<div class="masonry" id="feed"></div>
+<div class="toast" id="bottomToast">⏳ Next ad in 5:00 minutes</div>
+
+<div id="adOverlay">
+  <div class="ad-box">
+    <div class="icon">⌛</div>
+    <h3 id="adTitle">Watch to Unlock</h3>
+    <p id="adDesc">Watch a 15-second ad to continue<br>Ad supports free content • No charge</p>
+    <div id="realAdSlot" style="margin:14px 0;background:#f9fafb;border:1px dashed #e5e7eb;height:100px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#9ca3af">AdSense Rewarded Ad Here</div>
+    <button class="cta" onclick="onAdWatched()">Continue</button>
+    <div style="margin-top:8px;font-size:11px;color:#9ca3af">X button disabled • Ad must be watched</div>
+  </div>
+</div>
+
+<footer>
+  <a href="#" onclick="alert('Privacy: We use AdSense cookies. No personal data collected. Contact: help@smartshayari.com')">Privacy Policy</a> |
+  <a href="#" onclick="alert('About: Smart Shayari - AI based shayari generator from Purnea, Bihar')">About Us</a> |
+  <a href="#" onclick="alert('Contact: smartshayari.help@gmail.com')">Contact Us</a>
+  <div style="margin-top:8px">© 2026 Smart Shayari</div>
+</footer>
+
+<script>
+const baseShayaris=[
+{text:"तेरे ख्यालों में खोया हूँ, रात भर जागा हूँ...",cat:"Sad"},{text:"इश्क़ एक समंदर है, डूब के जाना है...",cat:"Love"},{text:"रात भर तेरा इंतज़ार किया, तू ना आई...",cat:"Sad"},{text:"यारी वो नहीं जो जान दे, यारी वो है जो हर वक़्त दे...",cat:"Yaari"},{text:"हम तो तेरे दिल के एक कोने में ही खुश थे...",cat:"Love"},{text:"मोहब्बत में कोई हिसाब नहीं होता...",cat:"Love"},{text:"Attitude तो बचपन से है, आज दिखा दिया...",cat:"Attitude"},{text:"ब्रेकअप के बाद भी तेरी याद आती है...",cat:"Breakup"},{text:"दिल टूटा है पर हौसला अभी बाकी है...",cat:"Sad"},{text:"तेरी हँसी में बसा है मेरा जहाँ...",cat:"Love"},
+];
+
+// --- FREE STORAGE LOGIC ---
+function getDB(){ try{ return JSON.parse(localStorage.getItem('smart_shayari_db')||'[]'); }catch(e){ return []; } }
+function setDB(arr){ localStorage.setItem('smart_shayari_db', JSON.stringify(arr)); }
+
+function getFeedData(){
+  let adminData = getDB(); // Admin Panel + User Generated + AI Generated sab yahan hai
+  let arr=[...adminData];
+  for(let i=0;i<32;i++){ let b=baseShayaris[i%baseShayaris.length]; arr.push({...b,id:'base_'+i,likes:Math.floor(500+Math.random()*3000), bg:'#ffffff', type:'FREE'}); }
+  return arr;
+}
+
+let currentCat="All";
+let isGeneratedMode=false;
+let pendingAction=null;
+let lastGeneratedList=[];
+
+function renderFeed(){
+  const feed=document.getElementById('feed');
+  let data=getFeedData().filter(s=> currentCat==='All' || s.cat===currentCat);
+  if(isGeneratedMode){
+    data=lastGeneratedList;
+  }
+  feed.innerHTML=data.map((s,i)=>{
+    let isBig = isGeneratedMode && i===0;
+    let isLocked = s.type==='PREMIUM' || (isGeneratedMode && i!==0);
+    return `
+    <div class="shayari-card ${isBig?'big':''} ${isLocked?'locked':''}" style="background:${s.bg||'#fff'}">
+      <div class="top"><span class="badge ${isLocked?'PREMIUM':'FREE'}">${isLocked?'PREMIUM':'FREE'}</span><span style="font-size:10px;color:#9ca3af">${s.cat}</span></div>
+      <div class="card-text">${s.text}</div>
+      <div class="card-foot"><span>❤️ ${s.likes||999}</span><span>↗️ Share</span></div>
+      ${isLocked?`<div class="lock-label">🔒 Watch Ad to Unlock</div>`:''}
+    </div>
+  `}).join('');
+}
+
+function showAd(title,desc,action){
+  document.getElementById('adTitle').innerText=title;
+  document.getElementById('adDesc').innerHTML=desc;
+  pendingAction=action;
+  document.getElementById('adOverlay').classList.add('show');
+}
+
+function onFilterClick(el,cat){
+  document.querySelectorAll('.f-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  showAd(`Watch to Unlock ${cat} Shayari`,`Watch a 15-second ad to unlock ${cat} feed<br>Ad supports free content • No charge`,{type:'filter',cat:cat});
+}
+
+function onGenerateClick(){
+  const idea=document.getElementById('userIdea').value.trim();
+  if(!idea){ alert('Pehle Apna Idea Likho!'); return; }
+  showAd(`Watch Ad to Generate Shayari`,`Your idea: "${idea.slice(0,25)}..."<br>Watch ad to generate 10 fresh shayaris`,{type:'generate', idea:idea});
+}
+
+function onAdWatched(){
+  document.getElementById('adOverlay').classList.remove('show');
+  if(!pendingAction) return;
+  if(pendingAction.type==='filter'){
+    currentCat=pendingAction.cat;
+    isGeneratedMode=false;
+    renderFeed();
+  } else if(pendingAction.type==='generate'){
+    // 1 FREE + 9 PREMIUM Generate karo
+    let idea = pendingAction.idea;
+    let gen=[];
+    for(let i=0;i<10;i++){
+      let base = baseShayaris[Math.floor(Math.random()*baseShayaris.length)];
+      gen.push({text: idea + " - " + base.text, cat: currentCat==='All'?'Love':currentCat, bg:'#ffffff', type: i===0?'FREE':'PREMIUM', likes: Math.floor(800+Math.random()*2000), id: Date.now()+i});
+    }
+    lastGeneratedList = gen;
+    // User ke Idea ko bhi More Shayari DB me Save karo
+    let db=getDB(); db.unshift(...gen); setDB(db);
+    
+    currentCat='All';
+    isGeneratedMode=true;
+    renderFeed();
+    window.scrollTo({top:400,behavior:'smooth'});
+  }
+  resetTimer();
+  pendingAction=null;
+}
+
+// 5 Minute Timer
+let timeLeft=300;
+let timerInterval=setInterval(()=>{
+  timeLeft--;
+  let m=String(Math.floor(timeLeft/60)).padStart(2,'0');
+  let s=String(timeLeft%60).padStart(2,'0');
+  document.getElementById('topTimer').innerText=`${m}:${s} • Browsing`;
+  document.getElementById('bottomToast').innerText=`⏳ Next ad in ${m}:${s} minutes`;
+  if(timeLeft<=0){
+    showAd(`You've been exploring for 5 minutes • Quick Break`,`Watch a short ad to continue exploring free shayari`,{type:'timer'});
+    timeLeft=300;
+  }
+},1000);
+function resetTimer(){ timeLeft=300; }
+
+// AI Auto Generate har 1 Ghante me
+setInterval(()=>{
+  let autoShayari = {text: "AI Auto: " + baseShayaris[Math.floor(Math.random()*baseShayaris.length)].text + " ✨", cat:"Love", bg:"#fef3c7", type:"FREE", likes:1200, id: Date.now()};
+  let db=getDB(); db.unshift(autoShayari); setDB(db);
+  console.log("AI ne auto shayari save ki");
+}, 3600000); // 1 ghanta
+
+renderFeed();
+</script>
+</body>
+</html>
