@@ -44,7 +44,39 @@ const bgs=["linear-gradient(135deg,#fff7ed,#ffedd5)","linear-gradient(135deg,#f0
 function copyShayari(){navigator.clipboard.writeText(currentShayari);alert("Copied ✅");}
 function shareWA(){window.open("https://wa.me/?text="+encodeURIComponent(currentShayari+" - via Smart Shayari Godda"));}
 function shareAny(){if(navigator.share)navigator.share({text:currentShayari});else copyShayari();}
-function generateShayari(){let input=document.getElementById('userInput').value.trim();if(!input){alert("Kuch likho!");return;}let low=input.toLowerCase();let mood="Love";if(low.includes("attitude"))mood="Attitude";else if(low.includes("sad")||low.includes("dard"))mood="Sad";else if(low.includes("yaari")||low.includes("dosti"))mood="Yaari";else if(low.includes("breakup"))mood="Breakup";else if(low.includes("funny"))mood="Funny";else if(low.includes("moti"))mood="Motivational";let pool=SHAYARI_DB.filter(s=>s.cat==mood);let base=pool[Math.floor(Math.random()*pool.length)].text;let final=`${input} - ${base}`;currentShayari=final;document.getElementById('modalCat').innerHTML=mood+" • AI Generated";document.getElementById('modalText').innerText=final;document.getElementById('detailModal').classList.add('active');document.getElementById('userInput').value="";}
+function generateShayari(){
+let input=document.getElementById('userInput').value.trim();
+if(!input){alert("Kuch likho! Ex: sad yaari");return;}
+let low=input.toLowerCase();
+// Instruction words hata do
+let clean = input.replace(/instagram|ke liye|ek|trending|shayri|shayari|banawo|banao|please|plz|style me/gi,"").trim();
+if(clean.length<2) clean="yaad";
+let mood="Sad";
+if(low.includes("attitude")) mood="Attitude";
+else if(low.includes("love")||low.includes("pyar")||low.includes("ishq")) mood="Love";
+else if(low.includes("yaari")||low.includes("dosti")||low.includes("bhai")) mood="Yaari";
+else if(low.includes("breakup")) mood="Breakup";
+else if(low.includes("funny")||low.includes("hasi")) mood="Funny";
+else if(low.includes("moti")) mood="Motivational";
+else if(low.includes("sad")||low.includes("dard")||low.includes("yaad")) mood="Sad";
+// PRO Templates - clean shayari, no bakwaas prefix
+const proTemplates={
+"Attitude":[`${clean} me bhi hum apni hi marzi se jeete hain,\nDuniya jalti hai to jale, hum attitude me rehte hain.`,`${clean} ki baat hai to suno,\nHum jhukte nahi, jhukana jaante hain.`],
+"Sad":[`${clean} ki raaton me ab neend nahi aati,\nJise chaha dil se, usi ki yaad tadpati hai.`,`Dil me ${clean} ka dard hai chhupa hua,\nMuskura rahe hain par andar se toota hua.`],
+"Love":[`${clean} me tera hi khayal hai,\nTu hai to har lamha kamaal hai.`,`Tere ${clean} me hi dil kho gaya hai,\nTujhse hi to ishq ka ehsaas hua hai.`],
+"Yaari":[`${clean} me yaari sabse pyari hai,\nYaar hai to har mushkil hari hai.`,`Yari me ${clean} to chalta hai mere bhai,\nTu hai to har gham me bhi khushi hai.`],
+"Breakup":[`${clean} ke baad bhi tujhe bhula na sake,\nDil toota hai par tujhse nafrat kar na sake.`],
+"Funny":[`${clean} ka chakkar hai babu bhaiya,\nShayari sun ke hansna to banta hai!`],
+"Motivational":[`${clean} me bhi haar mat man mere dost,\nWaqt badlega, tu bas koshish karna na chhod.`]
+};
+let list=proTemplates[mood]||proTemplates["Sad"];
+let final=list[Math.floor(Math.random()*list.length)];
+currentShayari=final;
+document.getElementById('modalCat').innerHTML=mood+" • AI Generated ✨";
+document.getElementById('modalText').innerText=final;
+document.getElementById('detailModal').classList.add('active');
+document.getElementById('userInput').value="";
+}
 function unlockAd(id){adCallback=()=>{unlockedPremium.add(id);localStorage.setItem('unlocked',JSON.stringify([...unlockedPremium]));renderGrid();openCard(id);};showAd();}
 function showAd(){const m=document.getElementById('adModal');m.classList.add('active');let sec=3;const btn=document.getElementById('adClose');btn.disabled=true;btn.style.opacity=".5";btn.innerText=`Wait ${sec}s...`;let iv=setInterval(()=>{sec--;if(sec<=0){clearInterval(iv);btn.disabled=false;btn.style.opacity="1";btn.innerText="Close Ad & Unlock ✅";btn.onclick=()=>{m.classList.remove('active');if(adCallback)adCallback();adCallback=null;};}else btn.innerText=`Wait ${sec}s...`;},1000);}
 setInterval(()=>{const a=document.getElementById('adModal'),d=document.getElementById('detailModal');if(!a.classList.contains('active')&&!d.classList.contains('active'))showAd();},5*60*1000);
