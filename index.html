@@ -36,7 +36,10 @@ let currentFilter="All";let unlockedPremium=new Set(JSON.parse(localStorage.getI
 function renderFilters(){document.getElementById('filters').innerHTML=categories.map(c=>`<button class="fbtn ${currentFilter==c?'active':''}" onclick="setFilter('${c}')">${c}</button>`).join('')}
 function setFilter(c){currentFilter=c;visibleCount=40;renderFilters();renderGrid();}
 function getFiltered(){if(currentFilter=="All")return SHAYARI_DB;return SHAYARI_DB.filter(s=>s.cat==currentFilter);}
-function renderGrid(){let data=getFiltered().slice(0,visibleCount);document.getElementById('grid').innerHTML=data.map(s=>{const isP=s.premium&&!unlockedPremium.has(s.id);return `<div class="card ${isP?'premium-bg':''}" onclick="openCard('${s.id}')"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span class="badge ${isP?'premium':'free'}">${isP?'PREMIUM':'FREE'}</span><span style="font-size:11px;color:#888;background:#f5f0ff;padding:2px 8px;border-radius:10px">${s.cat}</span></div><div style="font-size:14.5px;flex:1" class="${isP?'blur':''}">${s.text.substring(0,85)}...</div>${isP?`<div class="lock-btn" onclick="event.stopPropagation();unlockAd('${s.id}')">🔒 Watch Ad</div>`:''}<div style="margin-top:10px;font-size:12px;color:#666">❤️ ${s.likes} · Share</div></div>`;}).join('');document.getElementById('loadMoreBtn').style.display=getFiltered().length>visibleCount?'block':'none';}
+function renderGrid(){let data=getFiltered().slice(0,visibleCount);document.getElementById('grid').innerHTML=data.map(s=>{const isP=s.premium&&!unlockedPremium.has(s.id);return `<div class="card ${isP?'premium-bg':''}" onclick="openCard('${s.id}')"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span class="badge ${isP?'premium':'free'}">${isP?'PREMIUM':'FREE'}</span><span style="font-size:11px;color:#888;background:#f5f0ff;padding:2px 8px;border-radius:10px">${s.cat}</span></div><div style="font-size:14.5px;flex:1" class="${isP?'blur':''}">${s.text.substring(0,85)}...</div>${isP?`<div class="lock-btn" onclick="event.stopPropagation();unlockAd('${s.id}')">🔒 Watch Ad</div>`:''}<div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center">
+<span onclick="event.stopPropagation();doLike('${s.id}')" style="font-size:13px">❤️ <span id="like-${s.id}">${(JSON.parse(localStorage.getItem('likes')||'{}')[s.id]||s.likes)}</span></span>
+<span style="font-size:12px;color:#666">Share →</span>
+</div></div>`;}).join('');document.getElementById('loadMoreBtn').style.display=getFiltered().length>visibleCount?'block':'none';}
 function loadMore(){visibleCount+=40;renderGrid();}
 function openCard(id){const item=SHAYARI_DB.find(x=>x.id==id);if(!item)return;if(item.premium&&!unlockedPremium.has(id)){unlockAd(id);return;}currentShayari=item.text;document.getElementById('modalCat').innerHTML=item.cat+` · ❤️ ${item.likes}`;document.getElementById('modalText').innerText=item.text;document.getElementById('detailModal').classList.add('active');}
 function closeModal(){document.getElementById('detailModal').classList.remove('active');}
@@ -82,5 +85,17 @@ document.getElementById('userInput').value="";
 function unlockAd(id){adCallback=()=>{unlockedPremium.add(id);localStorage.setItem('unlocked',JSON.stringify([...unlockedPremium]));renderGrid();openCard(id);};showAd();}
 function showAd(){const m=document.getElementById('adModal');m.classList.add('active');let sec=3;const btn=document.getElementById('adClose');btn.disabled=true;btn.style.opacity=".5";btn.innerText=`Wait ${sec}s...`;let iv=setInterval(()=>{sec--;if(sec<=0){clearInterval(iv);btn.disabled=false;btn.style.opacity="1";btn.innerText="Close Ad & Unlock ✅";btn.onclick=()=>{m.classList.remove('active');if(adCallback)adCallback();adCallback=null;};}else btn.innerText=`Wait ${sec}s...`;},1000);}
 setInterval(()=>{const a=document.getElementById('adModal'),d=document.getElementById('detailModal');if(!a.classList.contains('active')&&!d.classList.contains('active'))showAd();},5*60*1000);
+function doLike(id){
+let likes=JSON.parse(localStorage.getItem('likes')||'{}');
+if(likes[id]){alert("Already liked ❤️");return;}
+likes[id]=1;
+let el=document.getElementById('like-'+id);
+el.innerText=parseInt(el.innerText)+1;
+localStorage.setItem('likes',JSON.stringify(likes));
+}
+function getLikes(id,def){
+let all=JSON.parse(localStorage.getItem('likeCount')||'{}');
+return all[id]||def;
+}
 renderFilters();renderGrid();
 </script></body></html>
