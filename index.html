@@ -51,6 +51,7 @@ let low=input.toLowerCase();
 // Instruction words hata do
 let clean = input.replace(/instagram|ke liye|ek|trending|shayri|shayari|banawo|banao|please|plz|style me/gi,"").trim();
 if(clean.length<2) clean="yaad";
+
 let mood="Sad";
 if(low.includes("attitude")) mood="Attitude";
 else if(low.includes("love")||low.includes("pyar")||low.includes("ishq")) mood="Love";
@@ -59,6 +60,7 @@ else if(low.includes("breakup")) mood="Breakup";
 else if(low.includes("funny")||low.includes("hasi")) mood="Funny";
 else if(low.includes("moti")) mood="Motivational";
 else if(low.includes("sad")||low.includes("dard")||low.includes("yaad")) mood="Sad";
+
 // PRO Templates - clean shayari, no bakwaas prefix
 const proTemplates={
 "Attitude":[`${clean} me bhi hum apni hi marzi se jeete hain,\nDuniya jalti hai to jale, hum attitude me rehte hain.`,`${clean} ki baat hai to suno,\nHum jhukte nahi, jhukana jaante hain.`],
