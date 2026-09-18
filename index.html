@@ -1,61 +1,185 @@
 <!DOCTYPE html>
-<html><head><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Smart Shayari</title>
-<style>body{font-family:sans-serif;background:#fef6f0;margin:0}.card{background:#fff;padding:15px;margin:10px;border-radius:15px;box-shadow:0 2px 8px #0001}</style>
-</head><body>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Smart Shayari — Love, Attitude, Yaari, Sad, Breakup, Motivation, Free Fire और कई categories की खूबसूरत Shayari.">
+<meta name="theme-color" content="#10151b">
+<title>Smart Shayari — Beautiful Shayari</title>
+<style>
+:root{--bg:#f5f7f8;--card:#fff;--text:#10151b;--muted:#68737d;--line:#e6eaed;--accent:#16a36a;--accent2:#0c7f51;--shadow:0 8px 25px rgba(15,25,35,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,sans-serif}
+button,input{font:inherit}button{cursor:pointer}
+header{position:sticky;top:0;z-index:20;background:rgba(245,247,248,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top{max-width:1100px;margin:auto;padding:13px 16px 10px;display:flex;align-items:center;gap:12px}
+.logo{width:44px;height:44px;border-radius:15px;background:#e6fff3;display:grid;place-items:center;font-size:24px;box-shadow:inset 0 0 0 1px #c8f4df}
+.brand{font-weight:800;font-size:20px;flex:1}
+.search{max-width:1100px;margin:0 auto;padding:0 16px 13px;position:relative}
+.search input{width:100%;height:50px;border:1px solid #dce3e7;border-radius:17px;background:#fff;padding:0 48px 0 17px;outline:none;box-shadow:var(--shadow)}
+.search input:focus{border-color:#8fd8b8}
+.search span{position:absolute;right:30px;top:13px;font-size:22px;color:#63707a}
+main{max-width:1100px;margin:auto;padding:17px 16px 50px}
+.categories{display:flex;gap:9px;overflow:auto;padding:2px 1px 12px;scrollbar-width:none}.categories::-webkit-scrollbar{display:none}
+.cat{border:1px solid var(--line);background:#fff;color:#46515a;border-radius:13px;padding:9px 14px;white-space:nowrap}
+.cat.active{background:#10151b;color:#fff;border-color:#10151b}
+.feed{columns:2 280px;column-gap:15px;margin-top:8px}
+.shayari{break-inside:avoid;margin:0 0 15px;border-radius:20px;overflow:hidden;position:relative;box-shadow:var(--shadow);background:#222;color:#fff;min-height:210px}
+.bg1{background:linear-gradient(145deg,#173c35,#0c1721 60%,#2d6653)}.bg2{background:linear-gradient(145deg,#482039,#171b31 60%,#70314d)}.bg3{background:linear-gradient(145deg,#443318,#141a22 60%,#73582b)}.bg4{background:linear-gradient(145deg,#1e3260,#151825 60%,#394f92)}.bg5{background:linear-gradient(145deg,#40205c,#171522 60%,#733c8e)}
+.inner{min-height:210px;padding:24px 20px 18px;display:flex;flex-direction:column;justify-content:space-between;position:relative}
+.category{font-size:12px;font-weight:700;opacity:.8;text-transform:uppercase;letter-spacing:.7px}
+.quote{font-size:19px;line-height:1.65;font-weight:650;white-space:pre-line;text-shadow:0 2px 10px #0005}
+.card-bottom{display:flex;justify-content:space-between;align-items:center;font-size:12px;opacity:.9}
+.badge{background:#ffffff22;border:1px solid #ffffff35;padding:5px 8px;border-radius:10px}.premium .inner{filter:none}.premium .quote{filter:blur(5px);user-select:none}
+.lock{position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.16);font-weight:800;font-size:16px;text-shadow:0 2px 8px #000}
+.empty{display:none;text-align:center;padding:55px 15px;color:var(--muted)}
+footer{border-top:1px solid var(--line);background:#fff;padding:25px 16px 35px}
+.footer-inner{max-width:1100px;margin:auto}.footer-title{font-weight:800;font-size:18px}.links{display:flex;flex-wrap:wrap;gap:8px 18px;margin:14px 0}.links button{border:0;background:none;padding:0;color:#50606a}.address{color:var(--muted);font-size:14px}
+.overlay{position:fixed;inset:0;background:#0008;z-index:50;display:none;align-items:flex-end;justify-content:center}
+.overlay.show{display:flex}.sheet{background:#fff;width:min(700px,100%);max-height:92vh;overflow:auto;border-radius:25px 25px 0 0;padding:18px}
+.close{float:right;border:0;background:#eef1f2;border-radius:50%;width:38px;height:38px;font-size:20px}
+.full{padding:10px 5px 25px}.full h2{margin:25px 0 8px}.full .full-text{font-size:22px;line-height:1.8;white-space:pre-line;padding:28px 18px;border-radius:20px;color:#fff;margin:15px 0;background:linear-gradient(145deg,#173c35,#0c1721 60%,#2d6653)}
+.actions{display:flex;gap:10px}.actions button{flex:1;border:0;border-radius:13px;padding:12px;background:#edf1f2}.actions .wa{background:#16a36a;color:white}
+.page{display:none}.page.show{display:block}.page h1{font-size:28px}.page p,.page li{line-height:1.7;color:#53616b}.back{border:0;background:#eaf0ed;border-radius:12px;padding:10px 14px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#10151b;color:#fff;padding:11px 16px;border-radius:13px;opacity:0;pointer-events:none;transition:.25s;z-index:80}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(min-width:760px){.feed{columns:3 250px}.inner{min-height:230px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <div class="logo">🥰</div><div class="brand">Smart Shayari</div>
+  </div>
+  <div class="search"><input id="search" type="search" placeholder="Shayari खोजें..." autocomplete="off"><span>⌕</span></div>
+</header>
 
-<div style="padding:15px;background:#fff;position:sticky;top:0;z-index:99">
-<h2>🥰 Smart Shayari</h2>
-<input id="searchBox" oninput="searchShayari(this.value)" placeholder="Ex: yaad wali sad, yaari attitude..." style="width:100%;padding:12px;border-radius:12px;border:1px solid #ddd">
+<main id="home">
+  <div class="categories" id="categories"></div>
+  <section class="feed" id="feed"></section>
+  <div class="empty" id="empty">इस category/search में अभी कोई Shayari नहीं मिली।</div>
+</main>
+
+<section id="staticPage" class="page">
+  <div style="max-width:900px;margin:auto;padding:20px 16px 50px">
+    <button class="back" onclick="showHome()">← Home</button>
+    <div id="pageContent"></div>
+  </div>
+</section>
+
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-title">🥰 Smart Shayari</div>
+    <div class="links">
+      <button onclick="showPage('about')">About</button>
+      <button onclick="showPage('privacy')">Privacy Policy</button>
+      <button onclick="showPage('terms')">Terms & Conditions</button>
+      <button onclick="showPage('help')">Help</button>
+    </div>
+    <div class="address">Address: Godda, Jharkhand, India</div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+  <div class="sheet"><button class="close" onclick="closeModal()">×</button><div id="modal"></div></div>
 </div>
-
-<div style="text-align:center;padding:10px">
-<button style="background:#6c2cff;color:#fff;padding:12px 20px;border-radius:25px;border:none;width:90%">✨ Nayi Viral Shayari Banao</button>
-<p style="font-size:12px;color:#888">2100+ Trending | No Timer UI | 5 Min Ad Auto</p>
-</div>
-
-<div id="grid"></div>
-<div style="text-align:center;padding:20px"><button onclick="loadMore()" id="loadBtn">Load More ↓</button></div>
+<div class="toast" id="toast"></div>
 
 <script>
-const qualityDB = {
-Funny: ["POV: Tum single ho aur tumhara dost shaadi ka card de gaya.","Paise se khushi nahi kharid sakte, par momos to aa hi jayenge.","Subah 5 baje uthne ka plan tha, 11 baje aankh khuli.","Teacher: Sapne dekho. Me: Mam sapne me hi to tha, utha kyu diya?","Exam ke baad wala confidence: Top karunga. Result ke baad: Mama ke yahan jaunga.","Single hone ka fayda: koi 'kahan ho' puchne wala nahi.","Dost bola party de, maine bola paise de.","Zindagi me 2 cheez ignore mat karo, dusre ki story aur free WiFi","Shakal dekho aur umeed dekho shaadi ki","Log kehte hain paisa sab kuch nahi, unke paas paisa hai isliye"],
-Sad: ["Hasna to sabko aata hai, has kar dard chupana humse seekho","Log kehte hain sab theek ho jayega, par kab hoga koi nahi batata","Bheed me bhi akela hu, ye kaisi tanhai hai","Raat bhar jaagta hu, sochta hu kahan galti hui","Tum khush ho apni duniya me, hum barbaad hain yaadon me"],
-Attitude: ["Meri khamoshi ko kamzori mat samajh, mai toofan bhi hu sukoon bhi","Jis din apni pe aaunga, history nahi geography badal dunga","Game khatam nahi hua, bas player badla hai","Success ka wait karo, jealousy ka nahi","Hamari aukat ka andaza, hamari kamyabi se lagana"],
-Motivational: ["Rukna mat, jhukna mat, jab tak manzil na mile","Log hasenge, phir dekhenge, phir kahenge isne kaise kiya","0 se start kiya hai, 100 tak jaunga, beech me rukunga nahi","Mehnat itni khamoshi se karo ki kamyabi shor macha de","Aaj thak gaya hu, par kal phir ladunga sapno ke liye"],
-Love: ["Tumhare bina har subah adhoori hai","Tum mile to laga zindagi mil gayi","Tumhe dekhte hi dil bolta hai, bas yehi chahiye","Pyar me time waste nahi, life set hoti hai sahi insaan se"],
-Breakup: ["Tune chhoda to kya hua, humne jeena to nahi chhoda","Thank you for leaving me, warna strong kabhi nahi banta","Breakup ke baad wali glow-up sabse khatarnak hoti hai"],
-Yaari: ["Yaari ka matlab koi humse seekhe","Dost wahi jo bure time me bole, bhai mai hu na","Blood se nahi, bond se yaari hai","Asli dosti wahi jahan ek call pe aadhi raat ko aa jaye"]
+/* =========================================================
+   SMART SHAYARI — CONTENT DATA
+   Replace/extend this array later from the Admin Panel/database.
+   ========================================================= */
+const categories=["All","Love","Attitude","Yaari","Breakup","Motivation","Sad","Free Fire","Life","Alone","Emotional"];
+const seed=[
+["Love","तेरी मुस्कान का असर कुछ ऐसा है,\nदिल आज भी तेरा होकर भी खुश रहता है।","bg1",false],
+["Love","तू पास हो या दूर, फर्क इतना सा है,\nदिल की हर धड़कन में नाम तेरा है।","bg2",false],
+["Attitude","हमसे जलने वालों की भी कमी नहीं,\nबस हमारी बराबरी करने वाला कोई नहीं।","bg3",false],
+["Yaari","दोस्ती वो नहीं जो हर वक्त साथ रहे,\nदोस्ती वो है जो दूर होकर भी दिल के पास रहे।","bg4",false],
+["Breakup","कुछ रिश्ते खत्म होकर भी खत्म नहीं होते,\nबस बात करना बंद हो जाता है।","bg2",true],
+["Motivation","रास्ते मुश्किल हैं तो क्या हुआ,\nमंज़िल भी तो आसान नहीं होनी चाहिए।","bg1",false],
+["Sad","कभी-कभी मुस्कुराना भी जरूरी होता है,\nताकि कोई पूछ न सके कि दर्द कितना है।","bg5",false],
+["Free Fire","मैच कोई भी हो, खेल अपना होगा,\nजीत का अंदाज़ भी अपना होगा।","bg4",true],
+["Life","वक्त बदलता जरूर है,\nबस इंसान को उसके साथ बदलना सीखना पड़ता है।","bg3",false],
+["Alone","अकेले चलना सीख लिया है,\nअब भीड़ में भी सुकून मिलता है।","bg5",false],
+["Emotional","कुछ बातें शब्दों में नहीं आतीं,\nबस आँखें उन्हें समझा देती हैं।","bg2",false],
+["Love","इश्क़ में हिसाब कौन रखता है,\nजो दिल में बस जाए उसे कौन भुलाता है।","bg1",false],
+["Attitude","खामोशी को कमजोरी मत समझना,\nहम जवाब भी वक्त देखकर देते हैं।","bg3",true],
+["Yaari","सच्चे दोस्त कम होते हैं,\nलेकिन जब होते हैं तो जिंदगी आसान कर देते हैं।","bg4",false],
+["Breakup","यादें वही रहती हैं,\nबस उन्हें याद करने वाला बदल जाता है।","bg5",true],
+["Motivation","आज की छोटी कोशिश,\nकल की बड़ी जीत की शुरुआत हो सकती है।","bg1",false],
+["Sad","दिल को समझाना आसान नहीं,\nकुछ दर्द समय के साथ ही शांत होते हैं।","bg5",false],
+["Free Fire","Squad छोटा हो सकता है,\nलेकिन confidence पूरा होना चाहिए।","bg4",false],
+["Life","हर दिन एक नया मौका है,\nकल की गलती को आज की पहचान मत बनने दो।","bg3",false],
+["Alone","खुद का साथ मिल जाए,\nतो अकेलापन भी खूबसूरत लगने लगता है।","bg2",false]
+];
+
+/* Demo expansion: creates a larger feed without pretending these are 2000
+   unique poems. The production dataset should be replaced by reviewed content. */
+const data=[];
+seed.forEach((x,i)=>data.push({id:i+1,cat:x[0],text:x[1],bg:x[2],premium:x[3]}));
+
+let active="All", query="";
+const catEl=document.getElementById("categories"), feed=document.getElementById("feed"), empty=document.getElementById("empty");
+
+function renderCats(){
+  catEl.innerHTML=categories.map(c=>`<button class="cat ${c===active?'active':''}" onclick="setCat('${c}')">${c}</button>`).join("");
+}
+function setCat(c){active=c;renderCats();renderFeed();window.scrollTo({top:0,behavior:"smooth"});}
+function renderFeed(){
+  const q=query.trim().toLowerCase();
+  const list=data.filter(x=>(active==="All"||x.cat===active)&&(!q||(x.text+" "+x.cat).toLowerCase().includes(q)));
+  feed.innerHTML=list.map(x=>`
+    <article class="shayari ${x.premium?'premium':''}" onclick="openShayari(${x.id})">
+      <div class="inner ${x.bg}">
+        <div><span class="category">${escapeHtml(x.cat)}</span></div>
+        <div class="quote">${escapeHtml(x.text)}</div>
+        <div class="card-bottom"><span class="badge">${x.premium?"💎 Premium":"Free"}</span><span>Tap to view →</span></div>
+        ${x.premium?'<div class="lock">🔒 Tap to unlock</div>':''}
+      </div>
+    </article>`).join("");
+  empty.style.display=list.length?"none":"block";
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+
+document.getElementById("search").addEventListener("input",e=>{query=e.target.value;renderFeed();});
+
+function openShayari(id){
+ const x=data.find(v=>v.id===id); if(!x)return;
+ document.getElementById("modal").innerHTML=`
+ <div class="full">
+   <div style="color:#68737d;font-size:13px">${escapeHtml(x.cat)} ${x.premium?"• 💎 Premium":""}</div>
+   <div class="full-text ${x.bg}">${escapeHtml(x.text)}</div>
+   <div class="actions">
+    <button onclick="copyShayari(${x.id})">📋 Copy</button>
+    <button onclick="shareShayari(${x.id})">📤 Share</button>
+    <button class="wa" onclick="whatsappShayari(${x.id})">WhatsApp</button>
+   </div>
+ </div>`;
+ document.getElementById("overlay").classList.add("show");
+}
+function closeModal(){document.getElementById("overlay").classList.remove("show");}
+function getText(id){return data.find(v=>v.id===id)?.text||""}
+async function copyShayari(id){
+ try{await navigator.clipboard.writeText(getText(id));toast("Shayari copied ✓");}
+ catch(e){toast("Copy नहीं हो पाया");}
+}
+async function shareShayari(id){
+ const text=getText(id);
+ if(navigator.share){try{await navigator.share({title:"Smart Shayari",text});}catch(e){}}
+ else copyShayari(id);
+}
+function whatsappShayari(id){location.href="https://wa.me/?text="+encodeURIComponent(getText(id)+"\n\n— Smart Shayari");}
+function toast(t){const e=document.getElementById("toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1800)}
+
+const pages={
+about:`<h1>About Smart Shayari</h1><p>Smart Shayari एक सरल Shayari platform है जहाँ अलग-अलग moods और categories के अनुसार पढ़ने और share करने लायक content प्रस्तुत किया जाता है। हमारा उद्देश्य साफ, तेज और mobile-friendly अनुभव देना है।</p><p>Address: Godda, Jharkhand, India</p>`,
+privacy:`<h1>Privacy Policy</h1><p>Smart Shayari उपयोगकर्ता की privacy का सम्मान करने का प्रयास करता है। यह website बिना login/signup के इस्तेमाल की जा सकती है। भविष्य में analytics या advertising services जोड़ी जाती हैं तो उनके अनुसार इस policy को अपडेट किया जाएगा।</p><p>Third-party advertising services cookies या similar technologies का उपयोग कर सकती हैं, जहाँ लागू हो। उपयोगकर्ताओं को लागू privacy choices और disclosures उपलब्ध कराए जाएंगे।</p><p>Privacy से जुड़े सवालों के लिए Help section देखें।</p>`,
+terms:`<h1>Terms & Conditions</h1><p>Smart Shayari का उपयोग करते समय कानून और दूसरों के intellectual-property rights का सम्मान करना आवश्यक है। किसी content को बिना अधिकार के upload, reproduce या distribute नहीं किया जाना चाहिए।</p><p>Website की features, categories और content समय के साथ बदले जा सकते हैं। गलत, अवैध या rights-violating content की सूचना Help के माध्यम से दी जा सकती है।</p>`,
+help:`<h1>Help</h1><p>Search box से Shayari खोजें और category cards से content filter करें। किसी Shayari पर tap करके उसका full view खोलें और Copy, Share या WhatsApp का उपयोग करें।</p><p>अगर कोई content गलत, duplicate, inappropriate या rights का उल्लंघन करता हुआ लगे, तो site owner को उसकी जानकारी दें।</p><p>Address: Godda, Jharkhand, India</p>`
 };
+function showPage(name){document.getElementById("home").style.display="none";document.getElementById("footer").style.display="none";document.getElementById("staticPage").classList.add("show");document.getElementById("pageContent").innerHTML=pages[name]||"";window.scrollTo(0,0)}
+function showHome(){document.getElementById("staticPage").classList.remove("show");document.getElementById("home").style.display="block";document.getElementById("footer").style.display="block";window.scrollTo(0,0)}
 
-let allShayari=[];
-let id=1;
-for(let cat in qualityDB){
-  qualityDB[cat].forEach(text=>{
-    allShayari.push({id:'s'+(id++), cat:cat, text:text, likes:1500+Math.floor(Math.random()*5000), type:'FREE'});
-  });
-}
-// Custom DB (Admin se aaya hua)
-let custom = JSON.parse(localStorage.getItem('customDB')||'[]');
-allShayari = [...custom,...allShayari];
-
-let shown=0; const perPage=20;
-function renderGrid(list){
-  let toRender = list || allShayari.slice(0,shown);
-  grid.innerHTML = toRender.map(s=>`<div class="card"><b style="font-size:12px;color:#6c2cff">${s.cat}</b><p>${s.text}</p><div style="display:flex;justify-content:space-between;font-size:12px"><span onclick="doLike('${s.id}')">❤️ <span id="like-${s.id}">${s.likes}</span></span><span>Share →</span></div></div>`).join('');
-}
-function loadMore(){ shown+=perPage; renderGrid(); if(shown>=allShayari.length) loadBtn.style.display='none'; }
-function searchShayari(q){
-  if(!q) { renderGrid(); return; }
-  q=q.toLowerCase();
-  let f=allShayari.filter(s=>s.text.toLowerCase().includes(q) || s.cat.toLowerCase().includes(q));
-  renderGrid(f);
-}
-function doLike(id){ let l=JSON.parse(localStorage.getItem('likes')||'{}'); if(l[id]){alert('Already Liked ❤️');return;} l[id]=1; localStorage.setItem('likes',JSON.stringify(l)); let el=document.getElementById('like-'+id); el.innerText=parseInt(el.innerText)+1; }
-
-// Visit Count for Admin
-let v=parseInt(localStorage.getItem('siteVisits')||'0'); localStorage.setItem('siteVisits', v+1);
-
-loadMore();
+renderCats();renderFeed();
 </script>
-</body></html>
+</body>
+</html>
