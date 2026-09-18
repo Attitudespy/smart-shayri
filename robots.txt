@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://attitudespy.github.io/smart-shayri/sitemap.xml
