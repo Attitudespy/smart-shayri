@@ -3,9 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Smart Shayari — Love, Attitude, Yaari, Sad, Breakup, Motivation, Free Fire और कई categories की खूबसूरत Shayari.">
+
+<!-- SEO -->
+<title>Smart Shayari - Shayari, Love, Attitude, Sad & Trending Shayari</title>
+<meta name="description" content="Smart Shayari पर पढ़ें love, attitude, yaari, funny, breakup, sad, motivational और trending shayari. अपनी पसंद की shayari पढ़ें, copy करें और share करें।">
+<link rel="canonical" href="https://attitudespy.github.io/smart-shayri/">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="smart-shayari-icon.png">
+
+<!-- Social sharing metadata -->
+<meta property="og:title" content="Smart Shayari - Shayari Ki Duniya">
+<meta property="og:description" content="Love, attitude, yaari, funny, breakup, sad, motivational और trending shayari पढ़ें, copy करें और share करें।">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://attitudespy.github.io/smart-shayri/">
+<meta property="og:image" content="https://attitudespy.github.io/smart-shayri/smart-shayari-icon.png">
+
 <meta name="theme-color" content="#10151b">
-<title>Smart Shayari — Beautiful Shayari</title>
 <style>
 :root{--bg:#f5f7f8;--card:#fff;--text:#10151b;--muted:#68737d;--line:#e6eaed;--accent:#16a36a;--accent2:#0c7f51;--shadow:0 8px 25px rgba(15,25,35,.08)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,sans-serif}
@@ -13,7 +27,7 @@ button,input{font:inherit}button{cursor:pointer}
 header{position:sticky;top:0;z-index:20;background:rgba(245,247,248,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .top{max-width:1100px;margin:auto;padding:13px 16px 10px;display:flex;align-items:center;gap:12px}
 .logo{width:44px;height:44px;border-radius:15px;background:#e6fff3;display:grid;place-items:center;font-size:24px;box-shadow:inset 0 0 0 1px #c8f4df}
-.brand{font-weight:800;font-size:20px;flex:1}
+.brand{font-weight:800;font-size:20px;flex:1;margin:0}
 .search{max-width:1100px;margin:0 auto;padding:0 16px 13px;position:relative}
 .search input{width:100%;height:50px;border:1px solid #dce3e7;border-radius:17px;background:#fff;padding:0 48px 0 17px;outline:none;box-shadow:var(--shadow)}
 .search input:focus{border-color:#8fd8b8}
@@ -47,7 +61,7 @@ footer{border-top:1px solid var(--line);background:#fff;padding:25px 16px 35px}
 <body>
 <header>
   <div class="top">
-    <div class="logo">🥰</div><div class="brand">Smart Shayari</div>
+    <div class="logo">🥰</div><h1 class="brand">Smart Shayari</h1>
   </div>
   <div class="search"><input id="search" type="search" placeholder="Shayari खोजें..." autocomplete="off"><span>⌕</span></div>
 </header>
@@ -84,10 +98,6 @@ footer{border-top:1px solid var(--line);background:#fff;padding:25px 16px 35px}
 <div class="toast" id="toast"></div>
 
 <script>
-/* =========================================================
-   SMART SHAYARI — CONTENT DATA
-   Replace/extend this array later from the Admin Panel/database.
-   ========================================================= */
 const categories=["All","Love","Attitude","Yaari","Breakup","Motivation","Sad","Free Fire","Life","Alone","Emotional"];
 const seed=[
 ["Love","तेरी मुस्कान का असर कुछ ऐसा है,\nदिल आज भी तेरा होकर भी खुश रहता है।","bg1",false],
@@ -112,8 +122,6 @@ const seed=[
 ["Alone","खुद का साथ मिल जाए,\nतो अकेलापन भी खूबसूरत लगने लगता है।","bg2",false]
 ];
 
-/* Demo expansion: creates a larger feed without pretending these are 2000
-   unique poems. The production dataset should be replaced by reviewed content. */
 const data=[];
 seed.forEach((x,i)=>data.push({id:i+1,cat:x[0],text:x[1],bg:x[2],premium:x[3]}));
 
