@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#081523">
+<title>Smart Shayari — Admin Panel</title>
+<style>
+:root{--bg:#07111d;--panel:#0d1a29;--line:#20364c;--text:#f4f8fc;--muted:#91a5b8;--green:#19d39a;--purple:#9b6cff;--font:"Noto Sans Devanagari","Nirmala UI","Mangal",system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased}button,input,textarea,select{font:inherit;font-family:var(--font)}button{cursor:pointer}[hidden]{display:none!important}
+.app{min-height:100vh;display:flex}.side{width:235px;flex:0 0 235px;background:#081523;border-right:1px solid var(--line);padding:18px 13px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;z-index:20}.brand{display:flex;gap:10px;align-items:center;padding:2px 8px 25px}.logo{width:42px;height:42px;border-radius:13px;background:#e6fff3;display:grid;place-items:center;font-size:23px}.brand b{display:block}.brand small{color:var(--muted)}.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#a9b9c8;border-radius:12px;padding:12px;text-align:left}.nav button.active,.nav button:hover{background:linear-gradient(135deg,#0d8c70,#10b889);color:#fff}.nav span{display:inline-block;width:28px;text-align:center}.private{margin-top:auto;border-top:1px solid var(--line);padding:15px 7px;color:var(--muted);font-size:11px;line-height:1.5}
+.main{min-width:0;flex:1;padding:0 24px 40px}.top{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center}.menu{display:none}.user{margin-left:auto;display:flex;align-items:center;gap:9px;color:#b8c7d4;font-size:12px}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#19d39a;color:#062018;font-weight:800}
+.content{max-width:1160px;margin:auto;padding-top:14px}.view{display:none}.view.active{display:block}.hero{padding:24px;border:1px solid #1c3850;border-radius:17px;background:linear-gradient(135deg,#10283b,#0b1828);margin-bottom:15px}.hero h1{margin:0 0 5px;font-size:28px}.hero p{margin:0;color:#a8bacb;line-height:1.6}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:15px}.stat,.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:0 16px 40px #0003}.stat{padding:17px}.stathead{display:flex;justify-content:space-between;color:#aebdca;font-size:13px}.ico{width:37px;height:37px;border-radius:11px;display:grid;place-items:center}.g{background:#19d39a22;color:var(--green)}.p{background:#9b6cff22;color:var(--purple)}.num{font-size:26px;font-weight:800;margin-top:9px}.foot{font-size:10px;color:#71879a}
+.grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.75fr);gap:15px}.card{overflow:hidden;margin-bottom:15px}.head{padding:14px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}.head h2{font-size:17px;margin:0}.body{padding:17px}.field{margin-bottom:14px}.field label{display:block;font-size:12px;color:#b7c6d2;margin-bottom:7px}.req{color:#ff7690}textarea,input,select{width:100%;border:1px solid #294158;background:#0a1725;color:#eef5fa;border-radius:10px;outline:0}textarea{min-height:120px;resize:vertical;padding:12px;line-height:1.6}input,select{height:43px;padding:0 12px}textarea:focus,input:focus,select:focus{border-color:#27cfa0;box-shadow:0 0 0 3px #27cfa012}.count{text-align:right;font-size:10px;color:#71879a}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.status{display:grid;grid-template-columns:1fr 1fr;gap:9px}.status button{height:42px;border:1px solid #30465d;background:#0a1725;color:#b7c6d2;border-radius:10px}.status .active.free{border-color:#17c993;background:#19d39a18;color:#29dda7}.status .active.premium{border-color:#9b6cff;background:#9b6cff18;color:#b695ff}.primary{width:100%;height:44px;border:0;border-radius:10px;background:linear-gradient(135deg,#14c58f,#08a978);color:#fff;font-weight:750}.cats{max-height:385px;overflow:auto}.catrow{display:flex;align-items:center;gap:9px;min-height:40px;border-bottom:1px solid #20364caa;font-size:12px}.dot{width:10px;height:10px;border-radius:50%;flex:0 0 10px}.catname{flex:1}.catcount{color:#8194a5}.smallbtn,.iconbtn{border:1px solid #294158;background:#0c1b2b;color:#dce8f1;border-radius:8px;padding:7px 9px;font-size:11px}.tablewrap{overflow:auto}table{width:100%;min-width:720px;border-collapse:collapse}th,td{padding:11px 9px;border-bottom:1px solid #20364caa;text-align:left;font-size:11px}th{color:#8397a9}.preview{max-width:310px;line-height:1.45}.pill{display:inline-flex;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:700}.greenpill{background:#19d39a18;color:#2de0ab}.purplepill{background:#9b6cff18;color:#b491ff}.actions{display:flex;gap:4px}.iconbtn{width:30px;height:30px;padding:0}.activity{display:grid}.activityrow{display:flex;gap:9px;padding:9px 0;border-bottom:1px solid #20364caa;font-size:11px}.activityrow:last-child{border:0}.adot{width:8px;height:8px;border-radius:50%;background:var(--green);margin-top:5px}.atxt{flex:1}.atime{color:#6f8598;white-space:nowrap}.title{font-size:25px;margin:0 0 5px}.sub{color:var(--muted);font-size:13px;margin:0 0 18px}.boxes{display:grid;grid-template-columns:1fr 1fr;gap:10px}.box{border:1px solid var(--line);background:var(--panel);border-radius:13px;padding:14px;display:flex;align-items:center;gap:12px}.box strong{flex:1;font-size:13px}.box small{color:#74899b}.toggle{width:45px;height:25px;border:0;border-radius:20px;background:#263a4e;position:relative}.toggle:after{content:"";position:absolute;top:4px;left:4px;width:17px;height:17px;border-radius:50%;background:#91a5b8;transition:.18s}.toggle.on{background:#0c9e78}.toggle.on:after{left:24px;background:#fff}
+@media(max-width:980px){.side{width:210px;flex-basis:210px}.stats{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}}
+@media(max-width:720px){.app{display:block}.side{position:fixed;left:-255px;width:245px;transition:.2s;height:100dvh}.side.open{left:0}.main{padding:0 12px 30px}.menu{display:block;border:1px solid var(--line);background:var(--panel);color:#fff;border-radius:10px;width:42px;height:42px}.top{height:62px}.boxes,.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side" id="side">
+<div class="brand"><div class="logo">🥰</div><div><b>Smart Shayari</b><br><small>Admin Panel</small></div></div>
+<nav class="nav">
+<button class="active" data-view="dashboard"><span>⌂</span>Dashboard</button>
+<button data-view="add"><span>⊞</span>Add Shayari</button>
+<button data-view="manage"><span>☷</span>Manage Shayari</button>
+<button data-view="categories"><span>▦</span>Categories</button>
+<button data-view="statistics"><span>▥</span>Statistics</button>
+<button data-view="settings"><span>⚙</span>Settings</button>
+</nav>
+<div class="private">🔒 Private Admin Use<br>Only for authorized use</div>
+</aside>
+
+<main class="main">
+<header class="top"><button class="menu" id="menu">☰</button><div class="user">Welcome Back! <b>Admin</b><div class="avatar">A</div></div></header>
+<div class="content">
+
+<section class="view active" id="view-dashboard">
+<div class="hero"><h1>Smart Shayari</h1><p>Shayari manage करें, नई Shayari add करें और website content को एक जगह से control करें।</p></div>
+<div class="stats">
+<div class="stat"><div class="stathead">Total Shayari <span class="ico g">▤</span></div><div class="num" id="total">20</div><div class="foot">Current content</div></div>
+<div class="stat"><div class="stathead">Total Views <span class="ico g">◉</span></div><div class="num">1,248</div><div class="foot">Demo statistics</div></div>
+<div class="stat"><div class="stathead">Categories <span class="ico p">▦</span></div><div class="num" id="catTotal">11</div><div class="foot">Active categories</div></div>
+<div class="stat"><div class="stathead">Premium <span class="ico p">★</span></div><div class="num" id="premiumTotal">4</div><div class="foot">Premium content</div></div>
+</div>
+
+<div class="grid">
+<div class="card">
+<div class="head"><h2>⊕ Add New Shayari</h2></div><div class="body">
+<form id="form">
+<div class="field"><label>Shayari Text <span class="req">*</span></label><textarea id="text" maxlength="500" placeholder="Yahan apni shayari likhen..." required></textarea><div class="count"><span id="count">0</span>/500</div></div>
+<div class="two">
+<div class="field"><label>Category <span class="req">*</span></label><select id="cat" required></select></div>
+<div class="field"><label>Background Theme</label><select id="bg"><option value="bg1">Green / Dark</option><option value="bg2">Rose / Dark</option><option value="bg3">Gold / Dark</option><option value="bg4">Blue / Dark</option><option value="bg5">Purple / Dark</option></select></div>
+</div>
+<div class="field"><label>Status</label><div class="status"><button type="button" class="active free" data-status="free">♙ Free</button><button type="button" class="premium" data-status="premium">◇ Premium</button></div></div>
+<button class="primary">➤ &nbsp; Publish Shayari</button>
+</form></div></div>
+
+<div>
+<div class="card"><div class="head"><h2>▦ Categories</h2><button class="smallbtn" id="addCat">＋ Add Category</button></div><div class="body cats" id="catList"></div></div>
+<div class="card"><div class="head"><h2>◷ Recent Activity</h2></div><div class="body activity" id="activity"></div></div>
+</div>
+</div>
+
+<div class="card"><div class="head"><h2>▤ Manage Shayari</h2><input class="search" id="search" placeholder="Search shayari..."></div><div class="tablewrap"><table><thead><tr><th>ID</th><th>Shayari Preview</th><th>Category</th><th>Type</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table"></tbody></table></div></div>
+</section>
+
+<section class="view" id="view-add"><h2 class="title">Add Shayari</h2><p class="sub">नई Shayari dashboard के form से add करें।</p><div class="card"><div class="body"><button class="primary" onclick="show('dashboard')">＋ Open Add Shayari Form</button></div></div></section>
+
+<section class="view" id="view-manage"><h2 class="title">Manage Shayari</h2><p class="sub">Search, edit, pin और delete करें।</p><div class="card"><div class="head"><h2>All Shayari</h2><input class="search" id="search2" placeholder="Search shayari..."></div><div class="tablewrap"><table><thead><tr><th>ID</th><th>Preview</th><th>Category</th><th>Type</th><th>Status</th><th>Actions</th></tr></thead><tbody id="table2"></tbody></table></div></div></section>
+
+<section class="view" id="view-categories"><h2 class="title">Categories</h2><p class="sub">Website categories manage करें।</p><div class="card"><div class="head"><h2>All Categories</h2><button class="smallbtn" onclick="addCategory()">＋ Add Category</button></div><div class="body boxes" id="categoryGrid"></div></div></section>
+
+<section class="view" id="view-statistics"><h2 class="title">Statistics</h2><p class="sub">Future real analytics integration के लिए dashboard structure.</p><div class="stats"><div class="stat"><div class="stathead">Total Shayari</div><div class="num" id="stat1">20</div></div><div class="stat"><div class="stathead">Total Views</div><div class="num">1,248</div></div><div class="stat"><div class="stathead">Premium</div><div class="num" id="stat3">4</div></div><div class="stat"><div class="stathead">Categories</div><div class="num" id="stat4">11</div></div></div><div class="card"><div class="body"><p style="color:var(--muted);line-height:1.7;margin:0">अभी statistics demo/local data पर आधारित हैं। Real website analytics बाद में connect किया जाएगा।</p></div></div></section>
+
+<section class="view" id="view-settings"><h2 class="title">Settings</h2><p class="sub">Admin panel की basic preferences.</p><div class="boxes">
+<div class="box"><div><strong>Dark Admin Theme</strong><br><small>Dark interface enabled.</small></div><button class="toggle on"></button></div>
+<div class="box"><div><strong>Confirm Before Delete</strong><br><small>Delete से पहले confirmation.</small></div><button class="toggle on" id="confirm"></button></div>
+<div class="box"><div><strong>Local Data Storage</strong><br><small>Prototype data browser localStorage में रहता है।</small></div><span class="pill greenpill">LOCAL</span></div>
+</div></section>
+
+</div></main></div>
+
+<script>
+"use strict";
+const KEY="smart_shayari_admin_v1",CATKEY="smart_shayari_categories_v1";
+const defaultCats=["All","Love","Attitude","Yaari","Breakup","Motivation","Sad","Free Fire","Life","Alone","Emotional"];
+const seed=[
+["Love","तेरी मुस्कान का असर कुछ ऐसा है,\\nदिल आज भी तेरा होकर भी खुश रहता है।","bg1",0],
+["Love","तू पास हो या दूर, फर्क इतना सा है,\\nदिल की हर धड़कन में नाम तेरा है।","bg2",0],
+["Attitude","हमसे जलने वालों की भी कमी नहीं,\\nबस हमारी बराबरी करने वाला कोई नहीं।","bg3",0],
+["Yaari","दोस्ती वो नहीं जो हर वक्त साथ रहे,\\nदोस्ती वो है जो दूर होकर भी दिल के पास रहे।","bg4",0],
+["Breakup","कुछ रिश्ते खत्म होकर भी खत्म नहीं होते,\\nबस बात करना बंद हो जाता है।","bg2",1],
+["Motivation","रास्ते मुश्किल हैं तो क्या हुआ,\\nमंज़िल भी तो आसान नहीं होनी चाहिए।","bg1",0],
+["Sad","कभी-कभी मुस्कुराना भी जरूरी होता है,\\nताकि कोई पूछ न सके कि दर्द कितना है।","bg5",0],
+["Free Fire","मैच कोई भी हो, खेल अपना होगा,\\nजीत का अंदाज़ भी अपना होगा।","bg4",1],
+["Life","वक्त बदलता जरूर है,\\nबस इंसान को उसके साथ बदलना सीखना पड़ता है।","bg3",0],
+["Alone","अकेले चलना सीख लिया है,\\nअब भीड़ में भी सुकून मिलता है।","bg5",0],
+["Emotional","कुछ बातें शब्दों में नहीं आतीं,\\nबस आँखें उन्हें समझा देती हैं।","bg2",0],
+["Love","इश्क़ में हिसाब कौन रखता है,\\nजो दिल में बस जाए उसे कौन भुलाता है।","bg1",0],
+["Attitude","खामोशी को कमजोरी मत समझना,\\nहम जवाब भी वक्त देखकर देते हैं।","bg3",1],
+["Yaari","सच्चे दोस्त कम होते हैं,\\nलेकिन जब होते हैं तो जिंदगी आसान कर देते हैं।","bg4",0],
+["Breakup","यादें वही रहती हैं,\\nबस उन्हें याद करने वाला बदल जाता है।","bg5",1],
+["Motivation","आज की छोटी कोशिश,\\nकल की बड़ी जीत की शुरुआत हो सकती है।","bg1",0],
+["Sad","दिल को समझाना आसान नहीं,\\nकुछ दर्द समय के साथ ही शांत होते हैं।","bg5",0],
+["Free Fire","Squad छोटा हो सकता है,\\nलेकिन confidence पूरा होना चाहिए।","bg4",0],
+["Life","हर दिन एक नया मौका है,\\nकल की गलती को आज की पहचान मत बनने दो।","bg3",0],
+["Alone","खुद का साथ मिल जाए,\\nतो अकेलापन भी खूबसूरत लगने लगता है।","bg2",0]];
+let data=JSON.parse(localStorage.getItem(KEY)||"null")||seed.map((x,i)=>({id:i+1,cat:x[0],text:x[1],bg:x[2],premium:!!x[3],pinned:false}));
+let cats=JSON.parse(localStorage.getItem(CATKEY)||"null")||defaultCats;
+let activity=JSON.parse(localStorage.getItem(KEY+"_activity")||"[]");
+const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+const save=()=>localStorage.setItem(KEY,JSON.stringify(data));
+const saveCats=()=>localStorage.setItem(CATKEY,JSON.stringify(cats));
+function act(t){activity.unshift({t,time:new Date().toLocaleString("en-IN",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"})});activity=activity.slice(0,8);localStorage.setItem(KEY+"_activity",JSON.stringify(activity));renderActivity()}
+function renderActivity(){document.getElementById("activity").innerHTML=activity.length?activity.map(a=>`<div class="activityrow"><i class="adot"></i><span class="atxt">${esc(a.t)}</span><span class="atime">${esc(a.time)}</span></div>`).join(""):`<span style="color:var(--muted);font-size:11px">No recent activity.</span>`}
+function renderCats(){const count={};data.forEach(x=>count[x.cat]=(count[x.cat]||0)+1);
+document.getElementById("catList").innerHTML=cats.map((c,i)=>`<div class="catrow"><i class="dot" style="background:hsl(${i*37%360} 70% 62%)"></i><span class="catname">${esc(c)}</span><span class="catcount">${c==="All"?data.length:(count[c]||0)}</span></div>`).join("");
+document.getElementById("categoryGrid").innerHTML=cats.filter(c=>c!=="All").map(c=>`<div class="box"><i class="dot" style="background:var(--green)"></i><strong>${esc(c)}</strong><small>${count[c]||0} Shayari</small><button class="iconbtn" onclick="renameCategory('${esc(c)}')">✎</button><button class="iconbtn" onclick="deleteCategory('${esc(c)}')">×</button></div>`).join("");
+document.getElementById("cat").innerHTML=cats.filter(c=>c!=="All").map(c=>`<option>${esc(c)}</option>`).join("")}
+function stats(){const p=data.filter(x=>x.premium).length;document.querySelectorAll("#total,#stat1").forEach(e=>e.textContent=data.length);document.querySelectorAll("#premiumTotal,#stat3").forEach(e=>e.textContent=p);document.querySelectorAll("#catTotal,#stat4").forEach(e=>e.textContent=cats.length)}
+function table(id,q=""){q=q.toLowerCase();const list=data.filter(x=>!q||x.text.toLowerCase().includes(q)||x.cat.toLowerCase().includes(q)).sort((a,b)=>Number(b.pinned)-Number(a.pinned)||a.id-b.id);
+document.getElementById(id).innerHTML=list.map(x=>`<tr><td>${x.id}</td><td class="preview">${esc(x.text).replace(/\\n/g,"<br>")}</td><td><span class="pill greenpill">${esc(x.cat)}</span></td><td><span class="pill ${x.premium?"purplepill":"greenpill"}">${x.premium?"Premium":"Free"}</span></td><td><span class="pill greenpill">Published</span></td><td><div class="actions"><button class="iconbtn" onclick="editItem(${x.id})">✎</button><button class="iconbtn" onclick="pinItem(${x.id})">${x.pinned?"★":"⚑"}</button><button class="iconbtn" onclick="deleteItem(${x.id})">×</button></div></td></tr>`).join("")||`<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:25px">No Shayari found.</td></tr>`}
+function render(){renderCats();renderActivity();stats();table("table",document.getElementById("search").value);table("table2",document.getElementById("search2")?.value||"")}
+function show(v){document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id==="view-"+v));document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));document.getElementById("side").classList.remove("open");scrollTo(0,0)}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>show(b.dataset.view));
+document.getElementById("menu").onclick=()=>document.getElementById("side").classList.toggle("open");
+document.getElementById("search").oninput=e=>table("table",e.target.value);
+document.getElementById("search2").oninput=e=>table("table2",e.target.value);
+document.getElementById("text").oninput=e=>document.getElementById("count").textContent=e.target.value.length;
+document.querySelectorAll(".status button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".status button").forEach(x=>x.classList.remove("active"));b.classList.add("active")});
+document.getElementById("form").onsubmit=e=>{e.preventDefault();const text=document.getElementById("text").value.trim();if(!text)return;data.push({id:data.length?Math.max(...data.map(x=>x.id))+1:1,cat:document.getElementById("cat").value,text,bg:document.getElementById("bg").value,premium:document.querySelector(".status .active").dataset.status==="premium",pinned:false});save();act("New shayari added");e.target.reset();document.getElementById("count").textContent="0";render();show("manage")};
+function editItem(id){const x=data.find(a=>a.id===id);if(!x)return;const t=prompt("Shayari edit करें:",x.text);if(t===null||!t.trim())return;x.text=t.trim();save();act("Shayari updated (ID: "+id+")");render()}
+function pinItem(id){const x=data.find(a=>a.id===id);if(!x)return;x.pinned=!x.pinned;save();act((x.pinned?"Shayari pinned":"Shayari unpinned")+" (ID: "+id+")");render()}
+function deleteItem(id){if(document.getElementById("confirm").classList.contains("on")&&!confirm("यह Shayari delete करनी है?"))return;data=data.filter(x=>x.id!==id);save();act("Shayari deleted (ID: "+id+")");render()}
+function addCategory(){let n=prompt("नई category का नाम:");if(!n||!n.trim())return;n=n.trim();if(cats.some(x=>x.toLowerCase()===n.toLowerCase()))return alert("Category पहले से मौजूद है।");cats.push(n);saveCats();act("New category added ("+n+")");render()}
+function renameCategory(old){let n=prompt("नया नाम:",old);if(!n||!n.trim()||n.trim()===old)return;n=n.trim();if(cats.includes(n))return alert("Category पहले से मौजूद है।");cats[cats.indexOf(old)]=n;data.forEach(x=>{if(x.cat===old)x.cat=n});saveCats();save();act("Category renamed");render()}
+function deleteCategory(n){if(data.some(x=>x.cat===n))return alert("इस category में Shayari मौजूद हैं। पहले category बदलें।");if(!confirm("Category delete करनी है?"))return;cats=cats.filter(x=>x!==n);saveCats();act("Category deleted ("+n+")");render()}
+document.getElementById("addCat").onclick=addCategory;
+document.querySelectorAll(".toggle").forEach(x=>x.onclick=()=>x.classList.toggle("on"));
+render();
+</script>
+</body>
+</html>
